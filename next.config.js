@@ -8,10 +8,14 @@ const nextConfig = {
           key: "Content-Security-Policy",
           value: [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagmanager.com",
+            // 'unsafe-inline' is required for Next.js hydration scripts
+            // 'unsafe-eval' is required for Next.js dev mode and some bundled code
+            // blob: is required for browser-image-compression Web Workers
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://pagead2.googlesyndication.com https://www.googletagmanager.com",
+            "worker-src 'self' blob:",
             "img-src 'self' blob: data: https:",
             "style-src 'self' 'unsafe-inline'",
-            "connect-src 'self' https://api.remove.bg",
+            "connect-src 'self' https://api.remove.bg https://*.googlesyndication.com https://*.google.com https://adtrafficquality.google https://ep1.adtrafficquality.google",
             "frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com",
           ].join("; "),
         },

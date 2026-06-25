@@ -22,11 +22,12 @@ export default function CompressPage() {
     if (!file) return;
     setLoading(true);
     try {
+      // maxSizeMB is set generously so quality is the only constraint
       const result = await imageCompression(file, {
-        maxSizeMB: 10,
+        maxSizeMB: 100,
         initialQuality: quality / 100,
+        alwaysKeepResolution: true,
         useWebWorker: true,
-        fileType: file.type as "image/jpeg" | "image/png" | "image/webp",
       });
       setCompressed(result);
     } catch {
